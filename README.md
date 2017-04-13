@@ -1,3 +1,3 @@
-FooCoin (FOO)
+pesacoin (FOO)
 
 Blah, blah, blah.

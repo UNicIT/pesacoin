@@ -1,3 +1,3 @@
-pesacoin (FOO)
+pesacoin (PSA)
 
 Blah, blah, blah.

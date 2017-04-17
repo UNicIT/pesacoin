@@ -1,0 +1,115 @@
+Author: Simon Seruyinda
+	COMP-541
+	Project Log
+	
+Part 1
+
+Setting Github account and obtaining source code
+
+I obtained the sourcecode from https://github.com/barcoin .. Ok 
+I had to wait for the invite to join the github organisation .. Ok
+Signing up with Github .. OK. Username: seruyinda
+Creating repository Ok . https://github.com/UNicIT/pesacoin
+Creating working directory Ok
+Cloning source git  Ok
+Renaming folder .. ok
+Removing .git directory .. Ok
+Adding content of folder to repository .. OK
+Making initial Commit ..Ok
+Adding remote repository .. OK
+Pushing files to git .. Ok
+Verification of git repository  .. Ok
+
+Part 2
+jedit installation ..Ok
+Search and Replace barcoin with pesacoin .. Ok
+Search and Replace FooCoin with pesacoin .. Ok
+Search and replace BAR with PSA .. OK
+Rename of barcoin-qt.pro to pesacoin-qt.pro .. OK
+Removing previous cloning artifacts .. OK
+Commit and push changes to git repo .. Ok
+Verification .. OK
+
+
+Part 3
+Setting ports for RPC and PNP .. OK
+Setting initial seed node. 
+	I left this as default because i didnot have any seed node at that time
+Setting coins per block ..Ok
+Setting block intervals .. Ok
+Setting address starting letter .. OK
+Editing images for the coins  
+	I left them as default.
+Setting Epoch time .. Ok
+Setting nonces to 0 .. OK
+Committing and pushing changes to git  .. OK
+
+First Build .. Ok
+I used the makefile.unix
+Stripping to reduce code .. Ok
+Committed and pushed code to git repo ... Ok
+
+Part 4
+Genesis Mining
+
+Run ./pesacoind -testnet ..
+	I did not get the same error. I got the error for wrong rpcusername and rpcpassword 
+	When i checked the debug.log, i realised that i already had the correct merkle 
+	hash (2fc1b7ef46270c053711fbae934cf7f83378efd4b3e158079451d9c6c90e4700) set in main.cpp
+	So i just created a pesacoin.conf file and set the rpcusername and rpcpassword and all was ok
+run ./pesacoind getinfo .. OK. got same output as specified in the guide.
+Commit and push code back to repo .. OK
+
+Part 5
+
+Main net
+Genesis block
+Setting epoch time .. Ok
+	At first i thought since we had already set it in part 3, that was enough, but i realised i had to set it
+	again.
+Run ./pesacoind &  Exited with error
+	Check debug log, i found wrong merkel hash. So i set hash line 2031 main.cpp to (30f45161daf297abf43af51debc254d3d616b34a7cbf78030eae4c7c973e959e)
+	I set line 2034 to true
+	rebulit the make binary
+	then run ./pesacoind & again
+	This time It started to mine the genesis block when i checked in the debug.log
+	When mining finished , i had the error message `block.GetHash() == hashGenesisBlock' failed.
+	In the debig log i was able to get the block nNonce and Blockhash
+	I set these in line 32 and 2019 of main.cpp respectively
+	I also set line 2034 to false, and also set line 27: to he new hash in checkpoint.cpp
+	I then run make  to rebuild (make -f makefile.unix USE_UPNP=-) .. OK
+	strip pesacoind ..Ok
+	When i run it again ./pesacoind & , i got no error.
+	I then committed and pushed the code to git repo
+	
+
+Mining Main net
+
+Here i had to create a clone of my dev VM to create the client VM. This took me about 3 hours for the clone to 
+complete
+Once done, I had to change the IP address and restart the client VM
+Running ./pesacoind -connect 192.168.1.10 .. Ok
+running ./pesacoind getinfo on dev VM ..OK. I could see the connection from the client
+./pesacoind getpeerinfo .. OK. I could see the IP of the client (192.168.1.11)
+
+On client VM
+./pesacoind getinfo .. ok I could see the connections set to 1
+./pesacoind getpeerifo .. ok. I could see the dev VM IP (192.168.1.10)
+./pesacoind getnewaddress .. OK
+./pesacoind setgenerate true 16 .. OK
+Started mornitoring. Was able to mine some blocks.
+On Dev VM i could see the mined blocks.
+./pesacoind getinfo .. OK
+	
+Part 6
+Building QT-wallet
+
+Running apt-get install qt4-default .. OK
+Running ./qmake "USE_UPNP=-" .. OK
+Running make .. OK
+Stopping client .. OK
+Run ./pesacoin-qt & .. OK
+I didn't have to edit artifacts of previous coins because i had already done it in part 2 of the project
+Push project back to git .. Ok
+
+
